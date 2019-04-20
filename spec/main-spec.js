@@ -283,5 +283,13 @@ describe('Main', () => {
     it('and select all commands', () => {
       expect(atom.commands.registeredCommands['highlight-selected:select-all']).toBe(true);
     });
+
+    it('and toogle fold non selected', () => {
+      expect(atom.commands.registeredCommands['highlight-selected:toogle-fold-non-selected']).toBe(true);
+    });
+
+    // it('and toogle autofold selected', () => {
+    //   expect(atom.commands.registeredCommands['highlight-selected:toogle-autofold-non-selected']).toBe(true);
+    // });
   });
 });

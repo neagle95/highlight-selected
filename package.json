@@ -19,7 +19,8 @@
   "dependencies": {
     "atom-package-deps": "^5.0.0",
     "debounce": "^1.2.0",
-    "grim": "^2.0.2"
+    "grim": "^2.0.2",
+    "throttle-debounce": "^2.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

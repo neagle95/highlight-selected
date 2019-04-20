@@ -371,5 +371,44 @@ describe('HighlightSelected', () => {
         expect(editorElement.querySelectorAll('.highlight-selected .region')).toHaveLength(2);
       });
     });
+
+    describe("can hide elements that are not in a selected row", () => {
+      beforeEach(() => {
+        atom.config.set('highlight-selected.onlyHighlightWholeWords', true);
+        const range = new Range(new Point(3, 6), new Point(3, 10));
+        editor.setSelectedBufferRange(range);
+        advanceClock(20000);
+      });
+
+      it("hides non selected lines", ()=> {
+        expect(editorElement.querySelectorAll('.line-number.folded')).toHaveLength(0);
+        highlightSelected.toogleFoldNonSelected();
+        expect(editorElement.querySelectorAll('.line-number.folded')).not.toHaveLength(0);
+      });
+
+      it("shows non selected lines after second toogle", ()=> {
+        expect(editorElement.querySelectorAll('.line-number.folded')).toHaveLength(0);
+        highlightSelected.toogleFoldNonSelected();
+        highlightSelected.toogleFoldNonSelected();
+        expect(editorElement.querySelectorAll('.line-number.folded')).toHaveLength(0);
+      });
+
+      it("stores the value of the hidden lines", ()=> {
+        // spyOn(highlightSelected.selectionManager, 'hideCandids');
+        expect(editorElement.querySelectorAll('.line-number.folded')).toHaveLength(0);
+        expect(highlightSelected.selectionManager.hideCandids).toBe(null);
+        highlightSelected.toogleFoldNonSelected();
+        expect(highlightSelected.selectionManager.hideCandids).not.toBe(null);
+      });
+
+      it("does not hide the line in which we have the selection", () => {
+        highlightSelected.toogleFoldNonSelected();
+        expect(highlightSelected.selectionManager.hideCandids.length).not.toBe(0);
+        highlightSelected.selectionManager.hideCandids.forEach((candid)=> {
+          expect(candid.start.row).not.toBe(3);
+        });
+      });
+
+    });
   });
 });

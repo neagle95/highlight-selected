@@ -9,6 +9,10 @@
             {
               "label": "Toggle",
               "command": "highlight-selected:toggle"
+            },
+            {
+              "label": "Toogle autofold on double click",
+              "command": "toogle-highlight-selected:autofold-non-selected"
             }
           ]
         }
